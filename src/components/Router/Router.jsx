@@ -1,4 +1,4 @@
-import JobList from 'components/JobList/JobList';
+// import JobList from 'components/JobList/JobList';
 import { Route, Routes } from 'react-router-dom';
 
 // import axios from 'axios';
@@ -12,6 +12,7 @@ import { getJobList } from 'services/api';
 const Router = () => {
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState(null);
+  console.log("Router ~ error", error);
 
  
   console.log('JobList ~ jobs', jobs);
