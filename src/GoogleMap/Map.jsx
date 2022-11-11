@@ -22,7 +22,12 @@ const Map = ({ lat, lng }) => {
     });
   }, [ref, map, lat, lng]);
 
-  return <div ref={ref} style={{ width: '400px', height: '400px' }}></div>;
+  return (
+    <div
+      ref={ref}
+      className="h-[502px] md:h-[436px] "
+    ></div>
+  );
 };
 
 export default Map;
