@@ -1,6 +1,5 @@
 import { getSalary } from 'helpers/getSalary';
 import GoogleMap from 'GoogleMap/GoogleMap';
-import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 const JobDetails = ({ jobs }) => {
@@ -15,7 +14,7 @@ const JobDetails = ({ jobs }) => {
     benefits,
     location,
     pictures,
-    description,
+    // description,
     employment_type,
   } = job;
 

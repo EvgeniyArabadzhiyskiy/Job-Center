@@ -2,9 +2,9 @@ import JobList from 'components/JobList/JobList';
 import { Route, Routes } from 'react-router-dom';
 
 // import axios from 'axios';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { getJobList } from 'services/api';
+// import { useEffect } from 'react';
+// import { useState } from 'react';
+// import { getJobList } from 'services/api';
 import array from 'services/dataJobs';
 import JobDetails from 'components/JobDetails/JobDetails';
 
