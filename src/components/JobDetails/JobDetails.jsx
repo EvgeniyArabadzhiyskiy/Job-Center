@@ -1,11 +1,35 @@
-import { getSalary } from 'helpers/getSalary';
-import GoogleMap from 'GoogleMap/GoogleMap';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-const JobDetails = ({ jobs }) => {
+import { getJobList } from 'services/api';
+import { getSalary } from 'helpers/getSalary';
+import GoogleMap from 'components/GoogleMap/GoogleMap';
+
+const JobDetails = () => {
   const { id } = useParams();
 
+  const [jobs, setJobs] = useState([]);
+  const [error, setError] = useState(null);
+  console.log("JobDetails ~ error", error);
+
   const job = jobs.find(item => item.id === id);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        setError(null);
+        const data = await getJobList();
+        setJobs(data);
+      } catch (error) {
+        setError(error);
+      }
+    })();
+  }, []);
+
+  if (!job) {
+    return null;
+  }
 
   const {
     name,
@@ -14,14 +38,14 @@ const JobDetails = ({ jobs }) => {
     benefits,
     location,
     pictures,
-    // description,
+    description,
     employment_type,
   } = job;
 
   return (
     <div className="max-w-[1368px] my-0 mx-auto ">
-      <div className="bg-[#6db676] pt-[24px] max-w-[1216px] min-h-screen my-0 mx-auto md:bg-[#70b9ad]  md:flex md:gap-[60px] md:pt-[50px]  ">
-        <div className="w-[100%]  px-[15px]  md:w-2/3 md:p-0" >
+      <div className="bg-[#6db676] pt-[24px] max-w-[1216px] min-h-screen my-0 mx-auto mb-[90px] md:bg-[#70b9ad]  md:flex md:gap-[60px] md:pt-[50px]  ">
+        <div className="w-[100%]  px-[15px]  md:w-2/3 md:p-0">
           <div className="mb-[32px]   md:flex md:justify-between md:items-center md:mb-[50px]">
             <h1 className="text-[28px] font-bold leading-[34px] text-[#3a4562] ">
               Job Details
@@ -53,42 +77,24 @@ const JobDetails = ({ jobs }) => {
                 </p>
               </div>
               <p className="text-[18px] font-normal leading-[24px] text-[#d25014e8] md:mt-[8px]">
-              Posted 2 days ago
-            </p>
+                Posted 2 days ago
+              </p>
             </div>
-
-            
 
             <div className="response">
               <h3 className="text-[20px] font-bold leading-[25px] text-[#3a4562] my-[15px] ">
                 Responsobilites
               </h3>
               <p className="text-[18px] font-normal leading-[24px] text-[#3a4562] mb-[20px] ">
-                Wellstar Medical Group, a physician-led multi-specialty group in
-                Atlanta, Georgia, is currently recruiting for a BC/BE
-                cardiothoracic surgeon to join their existing cardiovascular
-                program. This is an opportunity to play a key role on a
-                multidisciplinary team of cardiologists and surgeons.
+                {description}
               </p>
 
               <p className="text-[18px] font-normal leading-[24px] text-[#3a4562] mb-[20px]">
-                The ideal candidate will have five or more years of experience
-                in cardiac surgery. This candidate should be facile with
-                off-pump revascularization, complex aortic surgery, minimally
-                invasive valve and valve repair, transcatheter valve
-                replacement, surgical atrial fibrillation ablation, ventricular
-                assist device placement, and extra corporeal membrane
-                oxygenation
+                {description}
               </p>
 
               <p className="text-[18px] font-normal leading-[24px] text-[#3a4562] mb-[20px]">
-                Wellstar is one of the largest integrated healthcare systems in
-                the Southeast with 11 hospitals in Atlanta metro region. With
-                two open heart programs at Kennestone Regional Medical Center
-                and Atlanta Medical Center, Wellstar cardiac surgeons perform
-                over 1200 cardiac procedures per year. The cardiac service line
-                is the only center in Georgia with the Joint Commission
-                Comprehensive Cardiac Center certification.
+                {description}
               </p>
             </div>
 
@@ -163,8 +169,8 @@ const JobDetails = ({ jobs }) => {
             </div>
           </section>
 
-          <section className="mb-[85px]">
-            <h2 className="text-[28px] font-bold leading-[34px] text-[#3a4562] mt-[87px] mb-[30px] ">
+          <section className="mt-[87px]">
+            <h2 className="text-[28px] font-bold leading-[34px] text-[#3a4562]  mb-[30px] ">
               Atached Images
             </h2>
 
@@ -181,12 +187,17 @@ const JobDetails = ({ jobs }) => {
           </section>
         </div>
         <section className="w-[100%]  md:w-[400px] h-[502px] md:h-[436px]">
-        <h3 class="md:hidden text-[28px] font-bold leading-[34px] text-[#3a4562] mb-[32px] pl-[15px] ">Contacts</h3>
+          <h3 className="md:hidden text-[28px] font-bold leading-[34px] text-[#3a4562] mb-[32px] pl-[15px] ">
+            Contacts
+          </h3>
           {<GoogleMap location={location} />}
         </section>
       </div>
 
-      <Link to="/" className="text-[12px] font-semibold leading-[16px] text-[#3a4562] uppercase py-[18px] px-[30px]  rounded-[8px] border-none cursor-pointer bg-[#a1b1db4d] text-[#3a4562] ">
+      <Link
+        to="/"
+        className="inline-block text-[12px] font-semibold leading-[16px] text-[#3a4562] uppercase py-[18px] px-[30px]  rounded-[8px] border-none cursor-pointer bg-[#a1b1db4d] text-[#3a4562] "
+      >
         Return to Job board
       </Link>
     </div>

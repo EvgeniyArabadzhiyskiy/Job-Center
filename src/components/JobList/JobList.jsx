@@ -1,83 +1,79 @@
-// import axios from 'axios';
-// import { useEffect } from 'react';
-// import { useState } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-import { Link } from "react-router-dom";
+import { getJobList } from 'services/api';
+import Stars from 'components/Stars/Stars';
 
-// const BASE_URL = 'https://api.json-generator.com/templates/ZM1r0eic3XEy/data';
-// const ACCESS_TOKEN = 'access_token=wm3gg940gy0xek1ld98uaizhz83c6rh2sir9f9fu';
+const JobList = () => {
+  const [jobs, setJobs] = useState([]);
+  const [error, setError] = useState(null);
 
-const JobList = ({ jobs, error }) => {
-  // const [jobs, setJobs] = useState([]);
-  // const [error, setError] = useState(null);
-
-  // console.log('JobList ~ jobs', jobs);
-
-  // useEffect(() => {
-  //   async function getProducts() {
-
-  //     try {
-  //       setError(null);
-  //       const { data } = await axios.get(`${BASE_URL}?${ACCESS_TOKEN}`);
-  //       setJobs(data);
-
-  //     } catch (error) {
-  //       setError(error);
-  //     }
-  //   }
-  //   getProducts();
-  // }, []);
-
-
+  useEffect(() => {
+    (async function () {
+      try {
+        setError(null);
+        const data = await getJobList();
+        setJobs(data);
+      } catch (error) {
+        setError(error);
+      }
+    })();
+  }, []);
 
   return (
     <div>
-      <h3>JOB CENTER</h3>
+      {jobs.length > 0 && (
+        <div className="max-w-[1368px] my-0 mx-auto">
+          {error && <h1>Произошла ошибка</h1>}
+          {!error && (
+            <ul>
+              {jobs.map(({ id, title, pictures, address, name }) => {
+                return (
+                  <li
+                    className="grid grid-cols-[repeat(2,85px_1fr)] md:grid-cols-[3fr_1fr] md:items-center  gap-x-[30px] md:gap-y-0 gap-y-[20px]  py-[24px] px-[16px] mb-[8px] border-2 border-black rounded-[8px] bg-[#EFF0F5]"
+                    key={id}
+                  >
+                    <Link
+                      to={`/details/${id}`}
+                      className="flex gap-x-[30px] col-span-4 md:col-auto order-1 md:order-none"
+                    >
+                      <div className="min-w-[85px] h-[85px] rounded-full overflow-hidden">
+                        <img
+                          className="w-[85px] h-[85px] "
+                          src={pictures[0]}
+                          alt={name}
+                        />
+                      </div>
 
-      {/* <h1 className="text-3xl font-bold underline text-red-600">
-        Simple React Typescript Tailwind Sample
-      </h1> */}
+                      <div className="">
+                        <h1 className="text-[20px] font-bold leading-[25px] text-[#3a4562]">
+                          {title}
+                        </h1>
+                        <p className=" text-[16px] font-normal leading-[25px] text-[#878D9D] my-[8px]">
+                          {address}
+                        </p>
+                        <p className="text-[16px] font-normal leading-[25px] text-[#878D9D]">
+                          Vienna, Austria
+                        </p>
+                      </div>
+                    </Link>
 
-      {error && <h1>Произошла ошибка</h1>}
-      {!error && (
-        <ul>
-          {/* <Link to="/details" ></Link> */}
-          {jobs.map(
-            ({ id, title, description, pictures, name, employment_type }) => {
-              return (
-                <Link to={`/details/${id}`}  key={id}>
-                <li className="grid grid-cols-[85px_1fr_140px] items-center gap-x-[30px] py-[24px] px-[16px] mb-[8px] border-2 border-black rounded-[8px]" >
-                  <div className="self-start w-[85px] h-[85px] rounded-full overflow-hidden" >
-                    <img  src={pictures[0]} alt={name}  />
-                  </div>
-
-                 <div>
-                    <h1 className="text-xl" >{title}</h1>
-                    <p className="my-[8px] text-[16px] leading-[25px]" >Department name • Soborniy, str. 78</p>
-                    <p className="text-[16px] leading-[25px]">Vienna, Austria</p>
-                 </div>
-
-                 <div className="self-end p-[10px] ">Proshlo 2 dnia</div>
-
-                  {/* {pictures.map((img, idx) => (
-                    <img src={img} alt={img} key={idx} />
-                  ))} */}
-                </li>
-                </Link>
-              );
-            }
+                    <div className="flex justify-between gap-[25px] h-[100%] col-start-2 col-end-5 md:col-auto">
+                      <Stars />
+                      <p className="text-[16px] font-normal leading-[25px] text-[#878D9D] self-end w-[140px] text-end ">
+                        Posted 2 day ago
+                      </p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
           )}
-        </ul>
+        </div>
       )}
     </div>
   );
 };
 
 export default JobList;
-
-
-// style={{width: "100px", height: "100px"}}
-
-// button className="border-4 bg-red mr-2   "
-
-
