@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { BsFillShareFill } from 'react-icons/bs';
+
 import { getJobList } from 'services/api';
 import { getSalary } from 'helpers/getSalary';
 import GoogleMap from 'components/GoogleMap/GoogleMap';
@@ -11,7 +13,7 @@ const JobDetails = () => {
 
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState(null);
-  console.log("JobDetails ~ error", error);
+  console.log('JobDetails ~ error', error);
 
   const job = jobs.find(item => item.id === id);
 
@@ -52,7 +54,10 @@ const JobDetails = () => {
             </h1>
             <ul className="flex  items-center md:justify-between gap-[36px] mt-[35px]  md:gap-[24px] md:mt-0  md:mr-[50px] text-[18px] font-normal leading-[24px] text-[#3a4562]  ">
               <li className="links-item">Save Results</li>
-              <li className="links-item">Share</li>
+              <li className="flex justify-center items-center gap-x-[15px] ">
+                <span>{<BsFillShareFill />}</span>
+                <span>Share</span>
+              </li>
             </ul>
           </div>
 
