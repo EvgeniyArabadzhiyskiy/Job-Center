@@ -26,9 +26,9 @@ const Stars = () => {
               onClick={() => handleClick(idx)}
             >
               {idx <= activeIdx ? (
-                <AiFillStar size={18} fill={'#38415D'} />
+                <AiFillStar size={18} fill={'#3a4562'} />
               ) : (
-                <AiOutlineStar size={18} />
+                <AiOutlineStar size={18} fill="#3a4562" />
               )}
             </li>
           );

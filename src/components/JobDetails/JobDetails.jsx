@@ -14,15 +14,25 @@ const JobDetails = () => {
   const { id } = useParams();
 
   const [toggleSaveIcon, setToggleSaveIcon] = useState(false);
-
+  const [jobAddress, setJobAddress] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState(null);
-  console.log('JobDetails ~ error', error);
+  console.log("JobDetails ~ error", error);
 
   const job = jobs.find(item => item.id === id);
 
   const toggleIcon = () => {
     setToggleSaveIcon(prev => !prev);
+  };
+
+  const getAddress = address => {
+    const fullAddress = address.split(',').slice(1).join(',');
+
+    if (!fullAddress) {
+      return setJobAddress('Мабуть не дуже добрі координати)))');
+    }
+
+    setJobAddress(fullAddress);
   };
 
   useEffect(() => {
@@ -43,10 +53,13 @@ const JobDetails = () => {
 
   const {
     name,
+    phone,
+    email,
     title,
     salary,
     benefits,
     location,
+    address,
     pictures,
     description,
     employment_type,
@@ -207,11 +220,27 @@ const JobDetails = () => {
             </div>
           </section>
         </div>
-        <section className="w-[100%]  md:w-[400px] h-[502px] md:h-[436px]">
+        <section className="w-[100%]  md:w-[400px]   px-[10px]">
           <h3 className="md:hidden text-[28px] font-bold leading-[34px] text-[#3a4562] mb-[32px] pl-[15px] ">
             Contacts
           </h3>
-          {<GoogleMap location={location} />}
+          <div className=" h-[436px] rounded-[8px] overflow-hidden">
+            <div className="h-[40%] bg-[#3a4562] pl-[62px] pt-[31px] ">
+              <p className="text-[16px] font-bold leading-[19px] text-[#E7EAF0] mb-[17px]">
+                {address}
+              </p>
+              <p className="text-[16px] font-normal leading-[24px] text-[#E7EAF0]">
+                {jobAddress}
+              </p>
+              <p className="text-[16px] font-normal leading-[24px] text-[#fff]">
+                {phone}
+              </p>
+              <p className="text-[16px] font-normal leading-[24px] text-[#fff]">
+                {email}
+              </p>
+            </div>
+            {<GoogleMap location={location} getAddress={getAddress} />}
+          </div>
         </section>
       </div>
 
