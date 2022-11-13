@@ -24,7 +24,7 @@ const JobList = () => {
   return (
     <div>
       {jobs.length > 0 && (
-        <div className="max-w-[1368px] my-0 mx-auto">
+        <div className="max-w-[1368px] my-0 mx-auto px-[20px] " >
           {error && <h1>Произошла ошибка</h1>}
           {!error && (
             <ul>
