@@ -60,17 +60,17 @@ const JobDetails = () => {
             <h1 className="text-[28px] font-bold leading-[34px] text-[#3a4562] ">
               Job Details
             </h1>
-            <ul className="flex  items-center md:justify-between gap-[36px] mt-[35px]  md:gap-[24px] md:mt-0  md:mr-[50px] text-[18px] font-normal leading-[24px] text-[#3a4562]  ">
+            <ul className="flex items-center md:justify-between gap-[36px] mt-[35px]  md:gap-[24px] md:mt-0  md:mr-[50px] text-[18px] font-normal leading-[24px] text-[#3a4562]  ">
               <li
                 onClick={toggleIcon}
-                className="flex justify-center items-center gap-x-[10px] cursor-pointer"
+                className="flex justify-center items-center gap-[10px] cursor-pointer"
               >
                 <span>
                   {toggleSaveIcon ? <FaBookmark /> : <FaRegBookmark />}
                 </span>
                 <span>Save to my list</span>
               </li>
-              <li className="flex justify-center items-center gap-x-[10px] cursor-pointer">
+              <li className="flex justify-center items-center gap-[10px] cursor-pointer">
                 <span>{<BsFillShareFill />}</span>
                 <span>Share</span>
               </li>
