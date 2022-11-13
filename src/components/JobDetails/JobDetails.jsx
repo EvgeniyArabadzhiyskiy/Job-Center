@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { BsFillShareFill } from 'react-icons/bs';
+import { FaRegBookmark } from 'react-icons/fa';
+import { FaBookmark } from 'react-icons/fa';
 
 import { getJobList } from 'services/api';
 import { getSalary } from 'helpers/getSalary';
@@ -11,11 +13,17 @@ import GoogleMap from 'components/GoogleMap/GoogleMap';
 const JobDetails = () => {
   const { id } = useParams();
 
+  const [toggleSaveIcon, setToggleSaveIcon] = useState(false);
+
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState(null);
   console.log('JobDetails ~ error', error);
 
   const job = jobs.find(item => item.id === id);
+
+  const toggleIcon = () => {
+    setToggleSaveIcon(prev => !prev);
+  };
 
   useEffect(() => {
     (async function () {
@@ -53,8 +61,16 @@ const JobDetails = () => {
               Job Details
             </h1>
             <ul className="flex  items-center md:justify-between gap-[36px] mt-[35px]  md:gap-[24px] md:mt-0  md:mr-[50px] text-[18px] font-normal leading-[24px] text-[#3a4562]  ">
-              <li className="links-item">Save Results</li>
-              <li className="flex justify-center items-center gap-x-[15px] ">
+              <li
+                onClick={toggleIcon}
+                className="flex justify-center items-center gap-x-[10px] cursor-pointer"
+              >
+                <span>
+                  {toggleSaveIcon ? <FaBookmark /> : <FaRegBookmark />}
+                </span>
+                <span>Save to my list</span>
+              </li>
+              <li className="flex justify-center items-center gap-x-[10px] cursor-pointer">
                 <span>{<BsFillShareFill />}</span>
                 <span>Share</span>
               </li>
