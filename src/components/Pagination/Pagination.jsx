@@ -5,26 +5,23 @@ import { IoIosArrowForward } from 'react-icons/io';
 const buttons = ['1', '2', '3', '4', '5', '...', '20'];
 
 const Pagination = () => {
-  const [activeIdx, setActiveIdx] = useState('');
+  const [activeBtn, setActiveIdx] = useState('');
 
   const handleClick = page => {
-    if (isNaN(page)) {
-      return;
-    }
+    if (isNaN(page)) return;
+
     setActiveIdx(page);
   };
   return (
-    <div className="w-[515px]  my-0 mx-auto my-[20px] ">
-      <ul className="group is-act flex h-[50px] bg-[#ffffff] rounded-[8px] shadow-lg ">
-        <li className=" first:mr-[84px] flex justify-center items-center w-[100%] text-[20px] font-bold leading-[25px] text-[#3a4562] cursor-pointer">
-          {<IoIosArrowBack />}
-        </li>
+    <div className="max-w-[555px]  my-0 mx-auto my-[20px] mb-[70px] px-[20px] ">
+      <ul className="group is-current flex h-[50px] bg-[#ffffff] rounded-[8px] shadow-lg ">
+        <li className="pagination-btn md:mr-[84px]">{<IoIosArrowBack />}</li>
         {buttons.map((item, idx) => {
           const classNames = [
-            'active:bg-[#dcf3f8] flex justify-center items-center w-[100%] text-[20px] font-bold leading-[25px] text-[#3a4562]  cursor-pointer',
+            'pagination-btn font16-bold md:font20-bold active:bg-[#dcf3f8]',
           ];
-          if (activeIdx === item)
-            classNames.push('group-[.is-act]:border-b-4 border-[#3a4562] ');
+          if (activeBtn === item)
+            classNames.push('group-[.is-current]:border-b-4 border-[#3a4562] ');
           return (
             <li
               key={idx}
@@ -36,9 +33,7 @@ const Pagination = () => {
             </li>
           );
         })}
-        <li className="last:ml-[84px]  flex justify-center items-center w-[100%] text-[20px] font-bold leading-[25px] text-[#3a4562] cursor-pointer">
-          {<IoIosArrowForward />}
-        </li>
+        <li className="pagination-btn md:ml-[84px]">{<IoIosArrowForward />}</li>
       </ul>
     </div>
   );
