@@ -1,33 +1,36 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
+// import { useState } from 'react';
+// import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaRegBookmark } from 'react-icons/fa';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 
-import { getJobList } from 'services/api';
+// import { getJobList } from 'services/api';
 import { getCreateDate } from 'helpers/getCreateDate';
 import Stars from 'components/Stars/Stars';
 import Pagination from 'components/Pagination/Pagination';
+import array from 'services/dataJobs';
 
-const JobList = ({address}) => {
-  const [jobs, setJobs] = useState([]);
-  const [error, setError] = useState(null);
+const JobList = () => {
+  // const [jobs, setJobs] = useState([]);
+  // const [error, setError] = useState(null);
 
-  useEffect(() => {
-    (async function () {
-      try {
-        setError(null);
-        const data = await getJobList();
-        setJobs(data);
-      } catch (error) {
-        setError(error);
-      }
-    })();
-  }, []);
+  const jobs = array;
+  const error = null
+
+  // useEffect(() => {
+  //   (async function () {
+  //     try {
+  //       setError(null);
+  //       const data = await getJobList();
+  //       setJobs(data);
+  //     } catch (error) {
+  //       setError(error);
+  //     }
+  //   })();
+  // }, []);
 
   return (
     <div>
-        <Pagination />
       {jobs.length > 0 && (
         <div className="max-w-[1368px] my-0 mx-auto px-[20px] ">
           {error && <h1>Произошла ошибка</h1>}
@@ -85,7 +88,7 @@ const JobList = ({address}) => {
               })}
             </ul>
           )}
-          {/* <Pagination /> */}
+          <Pagination />
         </div>
       )}
     </div>
