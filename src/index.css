@@ -2,10 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
-    body {
-      @apply bg-[#dcf3f8];
-    }
-   
+  body {
+    @apply bg-[#dcf3f8] text-[18px] font-normal leading-[24px] text-[#3a4562];
   }
+}
+
+@layer components {
+  .font12-semibold {
+    @apply text-[12px] font-semibold leading-[16px] text-[#3a4562];
+  }
+
+  .font16-bold {
+    @apply text-[16px] font-bold leading-[19px] text-[#3a4562];
+  }
+
+  .font20-bold {
+    @apply text-[20px] font-bold leading-[25px] text-[#3a4562];
+  }
+
+  .font28-bold {
+    @apply text-[28px] font-bold leading-[34px] text-[#3a4562];
+  }
+}
+
+@layer components {
+  .pagination-btn {
+    @apply flex-center w-[100%] cursor-pointer;
+  }
+}
+
+.flex-center {
+  @apply flex justify-center items-center;
+}
+
+.apply-btn {
+  @apply uppercase py-[18px] px-[30px] rounded-[8px] border-none cursor-pointer;
+}
