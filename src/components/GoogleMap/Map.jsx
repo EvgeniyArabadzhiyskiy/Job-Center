@@ -89,17 +89,17 @@ const Map = ({ lat, lng, getAddress }) => {
   }, [ref, map, lat, lng]);
 
   useEffect(() => {
-    const latlng = { lat, lng };
-    const geocoder = new window.google.maps.Geocoder();
+    // const latlng = { lat, lng };
+    // const geocoder = new window.google.maps.Geocoder();
 
-    geocoder
-      .geocode({ location: latlng })
-      .then(response => {
-        if (response.results[0]) {
-          getAddress(response.results[0].formatted_address);
-        }
-      })
-      .catch(e => window.console.log('Geocoder failed: ' + e));
+    // geocoder
+    //   .geocode({ location: latlng })
+    //   .then(response => {
+    //     if (response.results[0]) {
+    //       getAddress(response.results[0].formatted_address);
+    //     }
+    //   })
+    //   .catch(e => window.console.log('Geocoder failed: ' + e));
   });
 
   return <div ref={ref} className="h-[60%]  "></div>;
