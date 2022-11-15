@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoIosArrowForward } from 'react-icons/io';
 
-const buttons = ['1', '2', '3', '4', '5', '...', '20'];
+const buttons: string[] = ['1', '2', '3', '4', '5', '...', '20'];
 
-const Pagination = () => {
-  const [activeBtn, setActiveIdx] = useState('');
+const Pagination: React.FC = () => {
+  const [activeBtn, setActiveIdx] = useState<string>('');
 
-  const handleClick = page => {
-    if (isNaN(page)) return;
+  const handleClick = (page: string) => {
+    if (isNaN(Number(page))) return;
 
     setActiveIdx(page);
   };
@@ -16,7 +16,7 @@ const Pagination = () => {
     <div className="max-w-[555px]  my-0 mx-auto my-[20px] mb-[70px] px-[20px] ">
       <ul className="group is-current flex h-[50px] bg-[#ffffff] rounded-[8px] shadow-lg ">
         <li className="pagination-btn md:mr-[84px]">{<IoIosArrowBack />}</li>
-        {buttons.map((item, idx) => {
+        {buttons.map((item: string, idx: number) => {
           const classNames = [
             'pagination-btn font16-bold md:font20-bold active:bg-[#dcf3f8]',
           ];
@@ -25,7 +25,6 @@ const Pagination = () => {
           return (
             <li
               key={idx}
-              disabled
               onClick={() => handleClick(item)}
               className={classNames.join(' ')}
             >

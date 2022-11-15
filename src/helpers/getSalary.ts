@@ -1,4 +1,4 @@
-export const getSalary = salary => {
+export const getSalary = (salary: string): string => {
   const salaryItems = salary.split('-').map(num => {
     let salary = '';
     salary = Number.parseInt(num) + ' 000';

@@ -1,62 +1,61 @@
 import { useState } from 'react';
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { BsFillShareFill } from 'react-icons/bs';
 import { FaRegBookmark } from 'react-icons/fa';
 import { FaBookmark } from 'react-icons/fa';
 
-// import { getJobList } from 'services/api';
-import { getSalary } from 'helpers/getSalary';
-import GoogleMap from 'components/GoogleMap/GoogleMap';
-import array from 'services/dataJobs';
-import { getCreateDate } from 'helpers/getCreateDate';
+import { getJobList } from '../../services/api';
+import { getSalary } from '../../helpers/getSalary';
+import GoogleMap from '../GoogleMap/GoogleMap';
+import { getCreateDate } from '../../helpers/getCreateDate';
+import { IJobItems } from '../../types/jobItems';
 
-const JobDetails = () => {
+const JobDetails: React.FC = () => {
   const { id } = useParams();
 
-  const [toggleSaveIcon, setToggleSaveIcon] = useState(false);
-  const [jobAddress, setJobAddress] = useState(null);
-  // const [jobs, setJobs] = useState([]);
-  // const [error, setError] = useState(null);
-  // console.log('JobDetails ~ error', error);
+  const [toggleSaveIcon, setToggleSaveIcon] = useState<boolean>(false);
+  const [jobAddress, setJobAddress] = useState<string>('');
+  const [jobs, setJobs] = useState<IJobItems[]>([]);
+  const [error, setError] = useState<any>(null);
 
-  const jobs = array;
+  console.log('JobDetails ~ error', error);
 
   const job = jobs.find(item => item.id === id);
 
-  const toggleIcon = () => {
+  const toggleIcon = (): void => {
     setToggleSaveIcon(prev => !prev);
   };
 
-  const getAddress = address => {
+  const getAddress = (address: string): void => {
     const fullAddress = address.split(',').slice(1).join(',');
 
     if (!fullAddress) {
-      return setJobAddress('Мабуть не дуже добрі координати)))');
+      setJobAddress('Мабуть не дуже добрі координати)))');
+      return;
     }
 
     setJobAddress(fullAddress);
   };
 
-  // useEffect(() => {
-  //   (async function () {
-  //     try {
-  //       setError(null);
-  //       const data = await getJobList();
-  //       setJobs(data);
-  //     } catch (error) {
-  //       setError(error);
-  //     }
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async function () {
+      try {
+        setError(null);
+        const data = await getJobList();
+        setJobs(data);
+      } catch (error) {
+        setError(error);
+      }
+    })();
+  }, []);
 
   if (!job) {
     return null;
   }
 
   const {
-    name,
     phone,
     email,
     title,
@@ -68,7 +67,7 @@ const JobDetails = () => {
     createdAt,
     description,
     employment_type,
-  } = job;
+  }: IJobItems = job;
 
   return (
     <div className="max-w-[1368px] my-0 mx-auto ">
@@ -156,7 +155,7 @@ const JobDetails = () => {
             <div>
               <h3 className="mb-[10px] ">Employment type</h3>
               <ul className="flex gap-x-[8px] mb-[30px]">
-                {employment_type.map((type, idx) => (
+                {employment_type.map((type: string, idx: number) => (
                   <li
                     className="flex-center w-[222px] h-[50px] rounded-[8px] text-[16px] leading-[16px] bg-[#a1b1db4d] border-solid border border-[#55699e4d] "
                     key={idx}
@@ -170,7 +169,7 @@ const JobDetails = () => {
             <div>
               <h3 className="mb-[10px]">Benefits</h3>
               <ul className="flex gap-x-[8px]">
-                {benefits.map((benefit, idx) => (
+                {benefits.map((benefit: string, idx: number) => (
                   <li
                     className="flex-center w-[222px] h-[50px] rounded-[8px] text-[16px] leading-[16px] bg-[#ffd00026] border-solid border border-[#ffcf00] "
                     key={idx}
@@ -187,12 +186,7 @@ const JobDetails = () => {
 
             <div className="grid gap-y-[20px] justify-items-center  items-center grid-cols-[repeat(2,1fr)] md:grid-cols-[repeat(3,1fr)] gap-x-[10px]">
               {pictures.map((img, idx) => (
-                <img
-                  className=" rounded-[8px]"
-                  src={img}
-                  alt={name}
-                  key={idx}
-                />
+                <img className=" rounded-[8px]" src={img} alt="job" key={idx} />
               ))}
             </div>
           </section>

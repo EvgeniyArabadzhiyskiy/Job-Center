@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 
-import JobList from 'components/JobList/JobList';
-import JobDetails from 'components/JobDetails/JobDetails';
+import JobList from '../JobList/JobList';
+import JobDetails from '../JobDetails/JobDetails';
 
-const Router = () => {
+const Router: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<JobList />} />

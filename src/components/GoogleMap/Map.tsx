@@ -1,12 +1,20 @@
 import { useEffect, useState, useRef } from 'react';
+import { IMapOptions } from '../../types/mapOptions';
 
-const Map = ({ lat, lng, getAddress }) => {
-  const ref = useRef(null);
-  const [map, setMap] = useState(null);
+interface IMapProps {
+  lat: number;
+  lng: number;
+
+  getAddress: (address: string) => void;
+}
+
+const Map: React.FC<IMapProps> = ({ lat, lng, getAddress }) => {
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const [map, setMap] = useState<google.maps.Map>();
 
   useEffect(() => {
-    const option = {
-      zoom: 4,
+    const option: IMapOptions = {
+      zoom: 8,
       center: { lat, lng },
       styles: [
         { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
@@ -76,22 +84,21 @@ const Map = ({ lat, lng, getAddress }) => {
       ],
     };
 
-    if (ref.current && !map) {
-      setMap(new window.google.maps.Map(ref.current, option));
+    if (mapContainer.current && !map) {
+      setMap(new google.maps.Map(mapContainer.current, option));
     }
-  }, [ref, map, lat, lng]);
+  }, [mapContainer, map, lat, lng]);
 
   useEffect(() => {
-    new window.google.maps.Marker({
+    new google.maps.Marker({
       position: { lat, lng },
       map: map,
     });
-  }, [ref, map, lat, lng]);
+  }, [mapContainer, map, lat, lng]);
 
   useEffect(() => {
     const latlng = { lat, lng };
-    const geocoder = new window.google.maps.Geocoder();
-
+    const geocoder = new google.maps.Geocoder();
     geocoder
       .geocode({ location: latlng })
       .then(response => {
@@ -102,7 +109,7 @@ const Map = ({ lat, lng, getAddress }) => {
       .catch(e => window.console.log('Geocoder failed: ' + e));
   });
 
-  return <div ref={ref} className="h-[60%]  "></div>;
+  return <div ref={mapContainer} className="h-[60%]  "></div>;
 };
 
 export default Map;
