@@ -2,16 +2,7 @@ import { Wrapper } from '@googlemaps/react-wrapper';
 
 import Map from './Map';
 
-// declare global {
-//   namespace NodeJS {
-//     interface ProcessEnv {
-//       REACT_APP_GOOGLE_MAP_APIkey: string;
-      
-//     }
-//   }
-// }
-
-const { REACT_APP_GOOGLE_MAP_APIkey }:  any = process.env;
+const { REACT_APP_GOOGLE_MAP_APIkey } = process.env;
 
 interface IGoogleMapProps {
   location: {
