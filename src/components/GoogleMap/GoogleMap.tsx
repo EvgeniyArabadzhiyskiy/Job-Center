@@ -2,12 +2,6 @@ import { Wrapper } from '@googlemaps/react-wrapper';
 
 import Map from './Map';
 
-
-const { REACT_APP_GOOGLE_MAP_APIkey } = process.env;
-console.log("REACT_APP_GOOGLE_MAP_APIkey", REACT_APP_GOOGLE_MAP_APIkey);
-
-
-
 interface IGoogleMapProps {
   location: {
     lat: number;
@@ -19,7 +13,7 @@ interface IGoogleMapProps {
 
 const GoogleMap: React.FC<IGoogleMapProps> = ({ location, getAddress }) => {
   return (
-    <Wrapper apiKey={REACT_APP_GOOGLE_MAP_APIkey}>
+    <Wrapper apiKey="AIzaSyDF1e7Wfn3Dgpb3m-Cw5u_f0fisQ8vNKDA">
       <Map lat={location.lat} lng={location.long} getAddress={getAddress} />
     </Wrapper>
   );
