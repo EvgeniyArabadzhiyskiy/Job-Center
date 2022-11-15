@@ -111,3 +111,5 @@ const JobList: React.FC = () => {
 };
 
 export default JobList;
+
+// "src/imeges.d.ts"
