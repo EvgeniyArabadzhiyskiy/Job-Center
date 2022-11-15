@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { IMapOptions } from '../../types/mapOptions';
-// import  iconMarker from '../../images/Shape.png';
+import  iconMarker from '../../images/Shape.png';
 
 interface IMapProps {
   lat: number;
@@ -95,7 +95,7 @@ const Map: React.FC<IMapProps> = ({ lat, lng, getAddress }) => {
     new google.maps.Marker({
       position: { lat, lng },
       map: map,
-      // icon: iconMarker
+      icon: iconMarker
     });
   }, [mapContainer, map, lat, lng]);
 
