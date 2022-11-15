@@ -1,17 +1,15 @@
 import { Route, Routes } from 'react-router-dom';
+import JobDetailsPage from '../JobDetailsPage/JobDetailsPage';
 
 import JobList from '../JobList/JobList';
-import JobDetails from '../JobDetails/JobDetails';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 const Router: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<JobList />} />
-      <Route path="/details/:id" element={<JobDetails />} />
-      <Route
-        path="*"
-        element={<h1 className="text-[40px] text-[red] ">Not Found</h1>}
-      />
+      <Route path="/details/:id" element={<JobDetailsPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };

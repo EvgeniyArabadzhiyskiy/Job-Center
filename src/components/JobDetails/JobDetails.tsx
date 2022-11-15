@@ -1,73 +1,37 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-
 import { BsFillShareFill } from 'react-icons/bs';
-import { FaRegBookmark } from 'react-icons/fa';
-import { FaBookmark } from 'react-icons/fa';
-
-import { getJobList } from '../../services/api';
-import { getSalary } from '../../helpers/getSalary';
-import GoogleMap from '../GoogleMap/GoogleMap';
+import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { getCreateDate } from '../../helpers/getCreateDate';
-import { IJobItems } from '../../types/jobItems';
+import { getSalary } from '../../helpers/getSalary';
+import BackLink from '../BackLink/BackLink';
+import GoogleMap from '../GoogleMap/GoogleMap';
 
-const JobDetails: React.FC = () => {
-  const { id } = useParams();
-
-  const [toggleSaveIcon, setToggleSaveIcon] = useState<boolean>(false);
-  const [jobAddress, setJobAddress] = useState<string>('');
-  const [jobs, setJobs] = useState<IJobItems[]>([]);
-  const [error, setError] = useState<any>(null);
-
-  console.log('JobDetails ~ error', error);
-
-  const job = jobs.find(item => item.id === id);
-
-  const toggleIcon = (): void => {
-    setToggleSaveIcon(prev => !prev);
+interface IJob {
+  title: string;
+  pictures: string[];
+  address: string;
+  createdAt: string;
+  phone: string;
+  email: string;
+  salary: string;
+  description: string;
+  employment_type: string[];
+  benefits: string[];
+  location: {
+    lat: number;
+    long: number;
   };
+}
 
-  const getAddress = (address: string): void => {
-    const fullAddress = address.split(',').slice(1).join(',');
+interface Props {
+  job: IJob;
+  jobAddress: string;
+  toggleSaveIcon: boolean;
 
-    if (!fullAddress) {
-      setJobAddress('Мабуть не дуже добрі координати)))');
-      return;
-    }
+  toggleIcon: () => void;
+  getAddress: (address: string) => void;
+}
 
-    setJobAddress(fullAddress);
-  };
-
-  useEffect(() => {
-    (async function () {
-      try {
-        setError(null);
-        const data = await getJobList();
-        setJobs(data);
-      } catch (error) {
-        setError(error);
-      }
-    })();
-  }, []);
-
-  if (!job) {
-    return null;
-  }
-
-  const {
-    phone,
-    email,
-    title,
-    salary,
-    benefits,
-    location,
-    address,
-    pictures,
-    createdAt,
-    description,
-    employment_type,
-  }: IJobItems = job;
+const JobDetails: React.FC<Props> = ({job, toggleSaveIcon, jobAddress, toggleIcon, getAddress,}) => {
 
   return (
     <div className="max-w-[1368px] my-0 mx-auto ">
@@ -78,14 +42,14 @@ const JobDetails: React.FC = () => {
             <ul className="flex items-center md:justify-between gap-[36px] mt-[35px] md:gap-[24px] md:mt-0  md:mr-[50px] text-[18px] font-normal leading-[24px] text-[#3a4562]  ">
               <li
                 onClick={toggleIcon}
-                className="flex-center gap-x-[10px] cursor-pointer"
+                className="flex-center gap-x-[10px] cursor-pointer fill-current transition-colors ease-in-out duration-500 text-[#3a4562] hover:text-[blue] "
               >
                 <span>
                   {toggleSaveIcon ? <FaBookmark /> : <FaRegBookmark />}
                 </span>
                 <span>Save to my list</span>
               </li>
-              <li className="flex-center gap-x-[10px] cursor-pointer">
+              <li className="flex-center gap-x-[10px] cursor-pointer fill-current hover-bg-color text-[#3a4562] hover:text-[blue]">
                 <span>{<BsFillShareFill />}</span>
                 <span>Share</span>
               </li>
@@ -93,7 +57,7 @@ const JobDetails: React.FC = () => {
           </div>
 
           <button
-            className="hidden md:inline-block font12-semibold apply-btn bg-[#384564] text-[#fff]"
+            className="hidden md:inline-block font12-semibold apply-btn    hover-bg-color  bg-[#384564] text-[#fff]  hover:bg-[#97a9d7b9] hover:text-[#384564]"
             type="button"
           >
             Apply Now
@@ -102,24 +66,24 @@ const JobDetails: React.FC = () => {
           <section className="flex flex-col mt-[32px] ">
             <div className="grid items-center grid-cols-[repeat(1,1fr_minmax(150px,_auto))] grid-rows-[repeat(2,auto)]  gap-x-[20px] gap-y-[35px] md:items-start md:gap-y-0 ">
               <h2 className="col-span-2 md:col-span-1 text-[24px] font-bold leading-[30px] text-[#3a4562]">
-                {title}
+                {job.title}
               </h2>
               <div className="order-1 md:order-none">
-                <p className="font20-bold">{getSalary(salary)}</p>
+                <p className="font20-bold">{getSalary(job.salary)}</p>
                 <p>Brutto, per year</p>
               </div>
               <p className="text-[#38415d5a] md:mt-[8px]">
-                {getCreateDate(createdAt)}
+                {getCreateDate(job.createdAt)}
               </p>
             </div>
 
             <div>
               <h3 className="font20-bold my-[15px] ">Responsobilites</h3>
-              <p className="mb-[20px] ">{description}</p>
+              <p className="mb-[20px] ">{job.description}</p>
 
-              <p className="mb-[20px]">{description}</p>
+              <p className="mb-[20px]">{job.description}</p>
 
-              <p className="mb-[20px]">{description}</p>
+              <p className="mb-[20px]">{job.description}</p>
             </div>
 
             <div className="mb-[32px]">
@@ -143,7 +107,7 @@ const JobDetails: React.FC = () => {
           </section>
 
           <button
-            className="block md:inline-block my-0 mx-[auto] md:m-0 font12-semibold apply-btn bg-[#384564] text-[#fff]"
+            className="block md:inline-block my-0 mx-[auto] md:m-0 font12-semibold apply-btn   hover-bg-color  bg-[#384564] text-[#fff]  hover:bg-[#97a9d7b9] hover:text-[#384564]"
             type="button"
           >
             Apply Now
@@ -155,7 +119,7 @@ const JobDetails: React.FC = () => {
             <div>
               <h3 className="mb-[10px] ">Employment type</h3>
               <ul className="flex gap-x-[8px] mb-[30px]">
-                {employment_type.map((type: string, idx: number) => (
+                {job.employment_type.map((type: string, idx: number) => (
                   <li
                     className="flex-center w-[222px] h-[50px] rounded-[8px] text-[16px] leading-[16px] bg-[#a1b1db4d] border-solid border border-[#55699e4d] "
                     key={idx}
@@ -169,7 +133,7 @@ const JobDetails: React.FC = () => {
             <div>
               <h3 className="mb-[10px]">Benefits</h3>
               <ul className="flex gap-x-[8px]">
-                {benefits.map((benefit: string, idx: number) => (
+                {job.benefits.map((benefit: string, idx: number) => (
                   <li
                     className="flex-center w-[222px] h-[50px] rounded-[8px] text-[16px] leading-[16px] bg-[#ffd00026] border-solid border border-[#ffcf00] "
                     key={idx}
@@ -185,7 +149,7 @@ const JobDetails: React.FC = () => {
             <h2 className="font28-bold  mb-[30px] ">Atached Images</h2>
 
             <div className="grid gap-y-[20px] justify-items-center  items-center grid-cols-[repeat(2,1fr)] md:grid-cols-[repeat(3,1fr)] gap-x-[10px]">
-              {pictures.map((img, idx) => (
+              {job.pictures.map((img: string, idx: number) => (
                 <img className=" rounded-[8px]" src={img} alt="job" key={idx} />
               ))}
             </div>
@@ -198,29 +162,24 @@ const JobDetails: React.FC = () => {
           <div className=" h-[436px] rounded-[8px] overflow-hidden">
             <div className="h-[40%] bg-[#3a4562] px-[62px] pt-[31px] ">
               <p className="text-[16px] font-bold leading-[19px] text-[#E7EAF0] mb-[17px]">
-                {address}
+                {job.address}
               </p>
               <p className="text-[16px] font-normal leading-[24px] text-[#E7EAF0]">
                 {jobAddress}
               </p>
               <p className="text-[16px] font-normal leading-[24px] text-[#fff]">
-                {phone}
+                {job.phone}
               </p>
               <p className="text-[16px] font-normal leading-[24px] text-[#fff]">
-                {email}
+                {job.email}
               </p>
             </div>
-            {<GoogleMap location={location} getAddress={getAddress} />}
+            {<GoogleMap location={job.location} getAddress={getAddress} />}
           </div>
         </section>
       </div>
 
-      <Link
-        to="/"
-        className="inline-block font12-semibold  apply-btn bg-[#a1b1db4d] text-[#3a4562] "
-      >
-        Return to Job board
-      </Link>
+      <BackLink />
     </div>
   );
 };

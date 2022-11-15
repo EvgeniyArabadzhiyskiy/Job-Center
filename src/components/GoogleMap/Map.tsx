@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { IMapOptions } from '../../types/mapOptions';
+import  iconMarker from '../../images/Shape.png';
 
 interface IMapProps {
   lat: number;
@@ -16,6 +17,7 @@ const Map: React.FC<IMapProps> = ({ lat, lng, getAddress }) => {
     const option: IMapOptions = {
       zoom: 8,
       center: { lat, lng },
+      disableDefaultUI: true,
       styles: [
         { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
         { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
@@ -93,6 +95,7 @@ const Map: React.FC<IMapProps> = ({ lat, lng, getAddress }) => {
     new google.maps.Marker({
       position: { lat, lng },
       map: map,
+      icon: iconMarker
     });
   }, [mapContainer, map, lat, lng]);
 

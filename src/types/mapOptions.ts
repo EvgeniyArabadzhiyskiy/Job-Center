@@ -4,5 +4,6 @@ export interface IMapOptions {
     lat: number;
     lng: number;
   };
+  disableDefaultUI: boolean;
   styles: any[];
 }

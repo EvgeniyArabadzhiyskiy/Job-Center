@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    @apply bg-[#dcf3f8] text-[18px] font-normal leading-[24px] text-[#3a4562];
+    @apply font-main bg-[#dcf3f8] text-[18px] font-normal leading-[24px] text-[#3a4562];
   }
 }
 
@@ -24,11 +26,21 @@
   .font28-bold {
     @apply text-[28px] font-bold leading-[34px] text-[#3a4562];
   }
+
+  .error-text {
+    @apply text-[26px] font-bold mt-[50px] text-center;
+  }
 }
 
 @layer components {
   .pagination-btn {
     @apply flex-center w-[100%] cursor-pointer;
+  }
+}
+
+@layer components {
+  .hover-bg-color {
+    @apply transition-colors ease-in-out duration-500;
   }
 }
 

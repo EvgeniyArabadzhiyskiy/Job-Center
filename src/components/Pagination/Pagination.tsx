@@ -14,11 +14,11 @@ const Pagination: React.FC = () => {
   };
   return (
     <div className="max-w-[555px]  my-0 mx-auto my-[20px] mb-[70px] px-[20px] ">
-      <ul className="group is-current flex h-[50px] bg-[#ffffff] rounded-[8px] shadow-lg ">
-        <li className="pagination-btn md:mr-[84px]">{<IoIosArrowBack />}</li>
+      <ul className="group is-current flex h-[50px] bg-[#ffffff] rounded-[8px] shadow-lg  ">
+        <li className="pagination-btn md:mr-[84px] hover-bg-color hover:bg-[#97a9d7b9]">{<IoIosArrowBack />}</li>
         {buttons.map((item: string, idx: number) => {
           const classNames = [
-            'pagination-btn font16-bold md:font20-bold active:bg-[#dcf3f8]',
+            'pagination-btn font16-bold md:font20-bold active:bg-[#dcf3f8] hover-bg-color hover:bg-[#97a9d7b9]',
           ];
           if (activeBtn === item)
             classNames.push('group-[.is-current]:border-b-4 border-[#3a4562] ');
@@ -32,7 +32,7 @@ const Pagination: React.FC = () => {
             </li>
           );
         })}
-        <li className="pagination-btn md:ml-[84px]">{<IoIosArrowForward />}</li>
+        <li className="pagination-btn md:ml-[84px] hover-bg-color hover:bg-[#97a9d7b9]">{<IoIosArrowForward />}</li>
       </ul>
     </div>
   );
